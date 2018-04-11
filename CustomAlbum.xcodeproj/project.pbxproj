@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7EB207DFBEF0058348A /* AppDelegate.m */; };
-		082EE7EF207DFBEF0058348A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7EE207DFBEF0058348A /* ViewController.m */; };
+		082EE7EF207DFBEF0058348A /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7EE207DFBEF0058348A /* MainMenu.m */; };
 		082EE7F2207DFBEF0058348A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 082EE7F0207DFBEF0058348A /* Main.storyboard */; };
 		082EE7F4207DFBEF0058348A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 082EE7F3207DFBEF0058348A /* Assets.xcassets */; };
 		082EE7F7207DFBF00058348A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */; };
 		082EE7FA207DFBF00058348A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7F9207DFBF00058348A /* main.m */; };
 		082EE804207DFBF00058348A /* CustomAlbumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE803207DFBF00058348A /* CustomAlbumTests.m */; };
 		082EE80F207DFBF00058348A /* CustomAlbumUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE80E207DFBF00058348A /* CustomAlbumUITests.m */; };
+		082EE81E207E02F30058348A /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE81D207E02F30058348A /* AlbumViewController.m */; };
+		082EE828207E2B710058348A /* Albums.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE827207E2B710058348A /* Albums.m */; };
+		082EE82B207E2EB10058348A /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE82A207E2EB10058348A /* AlbumCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +41,8 @@
 		082EE7E7207DFBEF0058348A /* CustomAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		082EE7EA207DFBEF0058348A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		082EE7EB207DFBEF0058348A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		082EE7ED207DFBEF0058348A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		082EE7EE207DFBEF0058348A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		082EE7ED207DFBEF0058348A /* MainMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
+		082EE7EE207DFBEF0058348A /* MainMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 		082EE7F1207DFBEF0058348A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		082EE7F3207DFBEF0058348A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		082EE7F6207DFBF00058348A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +54,12 @@
 		082EE80A207DFBF00058348A /* CustomAlbumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CustomAlbumUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		082EE80E207DFBF00058348A /* CustomAlbumUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomAlbumUITests.m; sourceTree = "<group>"; };
 		082EE810207DFBF00058348A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		082EE81C207E02F30058348A /* AlbumViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		082EE81D207E02F30058348A /* AlbumViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		082EE826207E2B710058348A /* Albums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Albums.h; sourceTree = "<group>"; };
+		082EE827207E2B710058348A /* Albums.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Albums.m; sourceTree = "<group>"; };
+		082EE829207E2EB10058348A /* AlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
+		082EE82A207E2EB10058348A /* AlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +111,15 @@
 			isa = PBXGroup;
 			children = (
 				082EE7EA207DFBEF0058348A /* AppDelegate.h */,
+				082EE826207E2B710058348A /* Albums.h */,
+				082EE827207E2B710058348A /* Albums.m */,
+				082EE829207E2EB10058348A /* AlbumCell.h */,
+				082EE82A207E2EB10058348A /* AlbumCell.m */,
 				082EE7EB207DFBEF0058348A /* AppDelegate.m */,
-				082EE7ED207DFBEF0058348A /* ViewController.h */,
-				082EE7EE207DFBEF0058348A /* ViewController.m */,
+				082EE7ED207DFBEF0058348A /* MainMenu.h */,
+				082EE7EE207DFBEF0058348A /* MainMenu.m */,
+				082EE81C207E02F30058348A /* AlbumViewController.h */,
+				082EE81D207E02F30058348A /* AlbumViewController.m */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
 				082EE7F3207DFBEF0058348A /* Assets.xcassets */,
 				082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */,
@@ -265,9 +280,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				082EE7EF207DFBEF0058348A /* ViewController.m in Sources */,
+				082EE828207E2B710058348A /* Albums.m in Sources */,
+				082EE81E207E02F30058348A /* AlbumViewController.m in Sources */,
+				082EE7EF207DFBEF0058348A /* MainMenu.m in Sources */,
 				082EE7FA207DFBF00058348A /* main.m in Sources */,
 				082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */,
+				082EE82B207E2EB10058348A /* AlbumCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
