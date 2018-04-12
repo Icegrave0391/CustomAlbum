@@ -19,13 +19,19 @@
     [super viewDidLoad];
     self.tableView.dataSource = self ;
     self.tableView.delegate = self ;
-    //配置self.albums
+    //批量操作
+    self.tableView.allowsMultipleSelectionDuringEditing = YES;
+    UILongPressGestureRecognizer * cell = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellLongPressed:)] ;
+    [self.tableView addGestureRecognizer:cell] ;
+    //配置self.albums   ****应该配合数据持久化*******待实现
     self.albums = [[NSMutableArray alloc] init] ;
     //定制navigation bar
     self.navigationController.navigationBar.hidden = NO ;
     self.title = @"相册列表" ;
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum) ] ;
-    self.navigationItem.rightBarButtonItem = rightItem ;
+    UIBarButtonItem * rightItemAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum) ] ;
+    UIBarButtonItem * rightItemDelete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeSelectedCells)];
+    self.navigationItem.rightBarButtonItems = @[rightItemAdd,rightItemDelete] ;
+    //self.navigationItem.rightBarButtonItem = rightItem ;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -47,8 +53,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([self.albums count]==0){
         [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone] ;
-    }else{
-        [tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine] ;
     }
     NSLog(@"删除以前%@",self.albums) ;
     return [self.albums count];
@@ -57,43 +61,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * cellID = @"ID" ;
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID] ;
-    if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellID] ;
-        
-        CGRect imageRect = CGRectMake(10, 10, 100, 100);
-        Albums * album = [self.albums objectAtIndex:indexPath.row] ;
-        //设置cell图片
-        if(album.photoDetails){
-            UIImageView * imageView = [[UIImageView alloc] initWithFrame:imageRect] ;
-            UIImageView * photo = (UIImageView *)(album.photoDetails.firstObject) ;
-            [imageView setImage:photo.image] ;
-            imageView.contentMode = UIViewContentModeScaleAspectFit ;
-            imageView.autoresizesSubviews = YES ;
-            imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ;
-            [cell addSubview:imageView] ;
-        }
-        //定制cell标题
-        CGRect titleRect = CGRectMake(120, 60, cell.frame.size.width - 120, 30) ;
-        UILabel * titleLabel = [[UILabel alloc] initWithFrame:titleRect] ;
-        titleLabel.text = album.title ;
-        titleLabel.font = [UIFont systemFontOfSize:18] ;
-        titleLabel.numberOfLines = 0 ;
-        [cell addSubview:titleLabel] ;
-        //定制cell显示日期
-        CGRect dateRect = CGRectMake(10, 120 , cell.frame.size.width - 10 , 20) ;
-        UILabel * dateLabel = [[UILabel alloc] initWithFrame:dateRect] ;
-        dateLabel.text = album.createTime ;
-        dateLabel.font = [UIFont systemFontOfSize:12] ;
-        [cell addSubview:dateLabel] ;
-    }
+    [tableView registerClass:[AlbumCell class] forCellReuseIdentifier:cellID] ;
+    AlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath] ;
+    [cell setWithAlbum:[self.albums objectAtIndex:indexPath.row]] ;
+    NSLog(@"%@",cell) ;
     return cell ;
-    /*   AlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID] ;
-     if(!cell){
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"getCellData" object:[self.albums objectAtIndex:indexPath.row]] ;
-     cell = [[AlbumCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellID] ;
-     }
-     return cell ;*/
 }
 //设置正确行高
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -198,6 +170,20 @@
     [newAlbum addAction:okAction] ;
     [self presentViewController:newAlbum animated:YES completion:nil] ;
     
+}
+//处理 批量删除
+-(void)tableViewCellLongPressed:(UILongPressGestureRecognizer *)gestureRecognizer{
+//    CGPoint point = [gestureRecognizer locationInView:self.tableView] ;
+//    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:point] ;
+    [self.tableView setEditing:!self.tableView.isEditing animated:YES] ;
+}
+-(void)removeSelectedCells{
+    NSMutableArray * deleteCells = [NSMutableArray array] ;
+    for(NSIndexPath * indexPath in self.tableView.indexPathsForSelectedRows){
+        [deleteCells addObject:self.albums[indexPath.row]] ;
+    }
+    [self.albums removeObjectsInArray:deleteCells] ;
+    [self.tableView reloadData] ;
 }
                      
 

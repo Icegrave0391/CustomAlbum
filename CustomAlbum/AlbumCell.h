@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 @class Albums ;
 @interface AlbumCell : UITableViewCell
-@property(nonatomic, strong) UIImage * image ;
-@property(nonatomic, strong) UILabel *
+
+@property(nonatomic, strong) UIImageView * cellImage ;
+@property(nonatomic, strong) UILabel * titleLabel ;
+@property(nonatomic, strong) UILabel * dateLabel ;
+
+-(void)setWithAlbum:(Albums *)album ;
+
 @end

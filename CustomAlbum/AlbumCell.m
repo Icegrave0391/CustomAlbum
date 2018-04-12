@@ -25,7 +25,7 @@
         [self.detailTextLabel setText:self.cellData.createTime] ;
     }*/
 }
-
+/*
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier] ;
     if(self){
@@ -59,13 +59,49 @@
 }
 -(void)receiveCellData:(NSNotification *)notification{
     self.cellData = notification.object ;
-}
+}*/
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
-
+-(void)setWithAlbum:(Albums *)album{
+    for(UIView * subview in [self.contentView subviews]){
+        [subview removeFromSuperview] ;
+    }
+    CGRect imageRect = CGRectMake(10, 10, 100, 100);
+    //设置cell图片
+    if(album.photoDetails){
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame:imageRect] ;
+        [imageView setImage:((UIImageView *)album.photoDetails.firstObject).image] ;
+        imageView.contentMode = UIViewContentModeScaleAspectFit ;
+        imageView.autoresizesSubviews = YES ;
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ;
+        self.cellImage = imageView ;
+        [self addSubview:self.cellImage] ;
+    }
+    //定制cell标题
+    CGRect titleRect = CGRectMake(120, 60, self.frame.size.width - 120, 30) ;
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:titleRect] ;
+    titleLabel.font = [UIFont systemFontOfSize:18] ;
+    titleLabel.numberOfLines = 0 ;
+    titleLabel.text = album.title ;
+    self.titleLabel = titleLabel ;
+    [self addSubview:self.titleLabel] ;
+    //定制cell显示日期
+    CGRect dateRect = CGRectMake(10, 120 , self.frame.size.width - 10 , 20) ;
+    UILabel * dateLabel = [[UILabel alloc] initWithFrame:dateRect] ;
+    dateLabel.font = [UIFont systemFontOfSize:12] ;
+    dateLabel.text = album.createTime ;
+    self.dateLabel = dateLabel ;
+    [self addSubview:self.dateLabel] ;
+}
+-(void)prepareForReuse{
+    [super prepareForReuse] ;
+    for(UIView * subview in [self.contentView subviews]) {
+        [subview removeFromSuperview] ;
+    }
+}
 
 @end
