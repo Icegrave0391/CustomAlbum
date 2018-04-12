@@ -19,10 +19,4 @@
     return self;
 }
 
--(NSMutableArray *)photoDetails{
-    if(!self.photoDetails){
-        _photoDetails = [[NSMutableArray alloc] init] ;
-    }
-    return _photoDetails ;
-}
 @end

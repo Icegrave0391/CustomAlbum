@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 @class Albums ;
 @interface AlbumCell : UITableViewCell
-@property(nonatomic, strong) Albums * cellData ;
+@property(nonatomic, strong) UIImage * image ;
+@property(nonatomic, strong) UILabel *
 @end

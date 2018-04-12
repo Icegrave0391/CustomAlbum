@@ -41,32 +41,77 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    if([self.albums count]==0){
+        [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone] ;
+    }else{
+        [tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine] ;
+    }
+    NSLog(@"删除以前%@",self.albums) ;
     return [self.albums count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * cellID = @"ID" ;
-/*    AlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if(cell == nil){
-        cell = [[AlbumCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellID] ;
-        cell.cellData = [self.albums objectAtIndex:indexPath.row] ;
-    }*/
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID] ;
-    if(cell == nil){
+    if(!cell){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellID] ;
+        
+        CGRect imageRect = CGRectMake(10, 10, 100, 100);
+        Albums * album = [self.albums objectAtIndex:indexPath.row] ;
+        //设置cell图片
+        if(album.photoDetails){
+            UIImageView * imageView = [[UIImageView alloc] initWithFrame:imageRect] ;
+            UIImageView * photo = (UIImageView *)(album.photoDetails.firstObject) ;
+            [imageView setImage:photo.image] ;
+            imageView.contentMode = UIViewContentModeScaleAspectFit ;
+            imageView.autoresizesSubviews = YES ;
+            imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ;
+            [cell addSubview:imageView] ;
+        }
+        //定制cell标题
+        CGRect titleRect = CGRectMake(120, 60, cell.frame.size.width - 120, 30) ;
+        UILabel * titleLabel = [[UILabel alloc] initWithFrame:titleRect] ;
+        titleLabel.text = album.title ;
+        titleLabel.font = [UIFont systemFontOfSize:18] ;
+        titleLabel.numberOfLines = 0 ;
+        [cell addSubview:titleLabel] ;
+        //定制cell显示日期
+        CGRect dateRect = CGRectMake(10, 120 , cell.frame.size.width - 10 , 20) ;
+        UILabel * dateLabel = [[UILabel alloc] initWithFrame:dateRect] ;
+        dateLabel.text = album.createTime ;
+        dateLabel.font = [UIFont systemFontOfSize:12] ;
+        [cell addSubview:dateLabel] ;
     }
-    
-    // Configure the cell...
-    [cell.textLabel setText:((Albums *)[self.albums objectAtIndex:indexPath.row]).title] ;
-    [cell.detailTextLabel setText:((Albums *)[self.albums objectAtIndex:indexPath.row]).createTime] ;
-    return cell;
+    return cell ;
+    /*   AlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID] ;
+     if(!cell){
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"getCellData" object:[self.albums objectAtIndex:indexPath.row]] ;
+     cell = [[AlbumCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellID] ;
+     }
+     return cell ;*/
+}
+//设置正确行高
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+ //   tableView.estimatedRowHeight = 140 ;
+ //   tableView.rowHeight = UITableViewAutomaticDimension ;
+    tableView.rowHeight = 140 ;
+    return tableView.rowHeight ;
+}
+
+#pragma mark - Table View Delegate
+-(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewRowAction * delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [self.albums removeObjectAtIndex:indexPath.row] ;
+        [tableView reloadData] ;
+        NSLog(@"删除以后%@",self.albums) ;
+    }];
+    NSArray *array = [NSArray arrayWithObject:delete] ;
+    return array ;
 }
 
 /*
