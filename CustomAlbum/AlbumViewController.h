@@ -11,5 +11,6 @@
 @interface AlbumViewController : UITableViewController
 
 @property(nonatomic, strong) NSMutableArray * albums ;
+@property(nonatomic, strong) NSIndexPath * indexPath ;//用于记录选中单元格
 
 @end

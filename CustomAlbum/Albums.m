@@ -15,6 +15,7 @@
     if(self){
         self.title = title ;
         self.createTime = createTime ;
+        self.photoDetails = [[NSMutableArray alloc] init] ;
     }
     return self;
 }

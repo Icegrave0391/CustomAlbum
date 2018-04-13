@@ -60,12 +60,6 @@
 -(void)receiveCellData:(NSNotification *)notification{
     self.cellData = notification.object ;
 }*/
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 -(void)setWithAlbum:(Albums *)album{
     for(UIView * subview in [self.contentView subviews]){
         [subview removeFromSuperview] ;
@@ -103,5 +97,7 @@
         [subview removeFromSuperview] ;
     }
 }
+
+
 
 @end

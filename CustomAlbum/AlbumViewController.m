@@ -9,6 +9,7 @@
 #import "AlbumViewController.h"
 #import "Albums.h"
 #import "AlbumCell.h"
+#import "PhotosCollectionViewController.h"
 @interface AlbumViewController () <UITableViewDataSource , UITableViewDelegate>
 
 @end
@@ -23,6 +24,7 @@
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
     UILongPressGestureRecognizer * cell = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellLongPressed:)] ;
     [self.tableView addGestureRecognizer:cell] ;
+    
     //配置self.albums   ****应该配合数据持久化*******待实现
     self.albums = [[NSMutableArray alloc] init] ;
     //定制navigation bar
@@ -31,12 +33,15 @@
     UIBarButtonItem * rightItemAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(newAlbum) ] ;
     UIBarButtonItem * rightItemDelete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeSelectedCells)];
     self.navigationItem.rightBarButtonItems = @[rightItemAdd,rightItemDelete] ;
+    //设置photodetails通知信息
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePhotoDetails:) name:@"PhotoDetails" object:nil] ;
     //self.navigationItem.rightBarButtonItem = rightItem ;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,6 +134,27 @@
     // Pass the selected object to the new view controller.
 }
 */
+//点击相册单元格处理
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(!self.tableView.editing){
+        UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.itemSize = CGSizeMake(50.0, 50.0) ;
+        layout.minimumLineSpacing =2 ;
+        layout.minimumInteritemSpacing = 2 ;
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal ;
+        PhotosCollectionViewController * tvc = [[PhotosCollectionViewController alloc] initWithCollectionViewLayout:layout] ;
+        Albums * album = self.albums[indexPath.row] ;
+        tvc.album = album ;
+        self.indexPath = indexPath ;                          //用于之后准确设置albums中的正确相册
+        tvc.navigationItem.title = album.title ;
+        [self.navigationController pushViewController:tvc animated:YES] ;
+    }
+}
+-(void)receivePhotoDetails:(NSNotification *)notification{
+    Albums * album = self.albums[self.indexPath.row] ;
+    UIImageView * imageView = notification.object ;
+    [album.photoDetails addObject:imageView] ;
+}
 
 //处理 新建相册
 -(void)alertTextFieldDidChange:(NSNotification *)notification{
@@ -171,12 +197,14 @@
     [self presentViewController:newAlbum animated:YES completion:nil] ;
     
 }
+
 //处理 批量删除
 -(void)tableViewCellLongPressed:(UILongPressGestureRecognizer *)gestureRecognizer{
 //    CGPoint point = [gestureRecognizer locationInView:self.tableView] ;
 //    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:point] ;
     [self.tableView setEditing:!self.tableView.isEditing animated:YES] ;
 }
+
 -(void)removeSelectedCells{
     NSMutableArray * deleteCells = [NSMutableArray array] ;
     for(NSIndexPath * indexPath in self.tableView.indexPathsForSelectedRows){
@@ -184,6 +212,11 @@
     }
     [self.albums removeObjectsInArray:deleteCells] ;
     [self.tableView reloadData] ;
+}
+
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self] ;
 }
                      
 
