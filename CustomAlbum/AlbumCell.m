@@ -73,23 +73,36 @@
         imageView.autoresizesSubviews = YES ;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ;
         self.cellImage = imageView ;
-        [self addSubview:self.cellImage] ;
+        [self.contentView addSubview:self.cellImage] ;
     }
     //定制cell标题
-    CGRect titleRect = CGRectMake(120, 60, self.frame.size.width - 120, 30) ;
+    CGRect titleRect = CGRectMake(120, 60, self.frame.size.width - 80, 30) ;
     UILabel * titleLabel = [[UILabel alloc] initWithFrame:titleRect] ;
     titleLabel.font = [UIFont systemFontOfSize:18] ;
     titleLabel.numberOfLines = 0 ;
     titleLabel.text = album.title ;
     self.titleLabel = titleLabel ;
-    [self addSubview:self.titleLabel] ;
+    [self.contentView addSubview:self.titleLabel] ;
+    //定制countLabel
+    CGRect countRect = CGRectMake(self.frame.size.width - 40, 60, 40, 30) ;
+    UILabel * countLabel = [[UILabel alloc] initWithFrame:countRect] ;
+    countLabel.font = [UIFont systemFontOfSize:18] ;
+    countLabel.numberOfLines = 0 ;
+    if(album.photoDetails){
+        countLabel.text = [NSString stringWithFormat:@"(%lu)",(unsigned long)[album.photoDetails count]] ;
+    }else{
+        countLabel.text = @"(0)" ;
+    }
+    countLabel.textColor = [UIColor lightGrayColor] ;
+    self.countLabel = countLabel ;
+    [self.contentView addSubview:self.countLabel] ;
     //定制cell显示日期
     CGRect dateRect = CGRectMake(10, 120 , self.frame.size.width - 10 , 20) ;
     UILabel * dateLabel = [[UILabel alloc] initWithFrame:dateRect] ;
     dateLabel.font = [UIFont systemFontOfSize:12] ;
     dateLabel.text = album.createTime ;
     self.dateLabel = dateLabel ;
-    [self addSubview:self.dateLabel] ;
+    [self.contentView addSubview:self.dateLabel] ;
 }
 -(void)prepareForReuse{
     [super prepareForReuse] ;

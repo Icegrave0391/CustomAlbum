@@ -131,7 +131,8 @@ static NSString * const reuseIdentifier = @"Cell";
     UIImageView * imageView = [[UIImageView alloc] initWithImage:image] ;
     [self.album.photoDetails addObject:imageView] ;
     [self.collectionView reloadData] ;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoDetails" object:imageView] ;
+    self.receivePhotoDetails(imageView);
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoDetails" object:imageView] ;
 }
 
 

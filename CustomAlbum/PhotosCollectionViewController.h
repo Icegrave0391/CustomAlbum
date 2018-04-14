@@ -11,4 +11,5 @@
 
 @interface PhotosCollectionViewController : UICollectionViewController
 @property(nonatomic, strong) Albums * album ;
+@property void(^receivePhotoDetails)(UIImageView * imageView);
 @end

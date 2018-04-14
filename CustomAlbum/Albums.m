@@ -19,5 +19,19 @@
     }
     return self;
 }
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.title forKey:@"title"] ;
+    [aCoder encodeObject:self.createTime forKey:@"time"] ;
+    [aCoder encodeObject:self.photoDetails forKey:@"photo"] ;
+}
+-(instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super init] ;
+    if(self){
+        self.title = [aDecoder decodeObjectForKey:@"title"] ;
+        self.createTime = [aDecoder decodeObjectForKey:@"time"] ;
+        self.photoDetails = [aDecoder decodeObjectForKey:@"photo"] ;
+    }
+    return self ;
+}
 
 @end

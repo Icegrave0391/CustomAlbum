@@ -11,11 +11,14 @@
 @implementation PhotosCollectionViewCell
 
 -(void)setWithPhotoImage:(UIImage *)image{
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] ;
+    for(UIImageView * imageView in [self.contentView subviews]){
+        [imageView removeFromSuperview] ;
+    }
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)] ;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit ;
     self.imageView.autoresizesSubviews = YES ;
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight ;
     [self.imageView setImage:image] ;
-    [self addSubview:self.imageView] ;
+    [self.contentView addSubview:self.imageView] ;
 }
 @end

@@ -13,7 +13,7 @@
 @property(nonatomic, strong) UIImageView * cellImage ;
 @property(nonatomic, strong) UILabel * titleLabel ;
 @property(nonatomic, strong) UILabel * dateLabel ;
-
+@property(nonatomic, strong) UILabel * countLabel ;
 -(void)setWithAlbum:(Albums *)album ;
 
 @end

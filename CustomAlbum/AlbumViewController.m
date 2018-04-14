@@ -10,7 +10,7 @@
 #import "Albums.h"
 #import "AlbumCell.h"
 #import "PhotosCollectionViewController.h"
-@interface AlbumViewController () <UITableViewDataSource , UITableViewDelegate>
+@interface AlbumViewController () <UITableViewDataSource , UITableViewDelegate, NSCoding>
 
 @end
 
@@ -42,6 +42,23 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated] ;
+    NSString * file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"albums.data"] ;
+    self.albums = [NSKeyedUnarchiver unarchiveObjectWithFile:file] ;
+    if(!self.albums){
+        self.albums = [[NSMutableArray alloc] init] ;
+    }
+    else{
+        for(Albums * album in self.albums){
+            UIImageView * imageView = album.photoDetails.firstObject ;
+            NSLog(@"imageView:%@",imageView) ;
+        }
+    }
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
+    [self.tableView reloadData] ;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,6 +101,7 @@
 -(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewRowAction * delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [self.albums removeObjectAtIndex:indexPath.row] ;
+        [self writeToFile] ;
         [tableView reloadData] ;
         NSLog(@"删除以后%@",self.albums) ;
     }];
@@ -138,22 +156,45 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(!self.tableView.editing){
         UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(50.0, 50.0) ;
+        layout.itemSize = CGSizeMake(100.0, 100.0) ;
         layout.minimumLineSpacing =2 ;
         layout.minimumInteritemSpacing = 2 ;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal ;
         PhotosCollectionViewController * tvc = [[PhotosCollectionViewController alloc] initWithCollectionViewLayout:layout] ;
         Albums * album = self.albums[indexPath.row] ;
         tvc.album = album ;
+        tvc.receivePhotoDetails = ^(UIImageView *imageView) {
+            [self writeToFile] ;
+        };
         self.indexPath = indexPath ;                          //用于之后准确设置albums中的正确相册
         tvc.navigationItem.title = album.title ;
         [self.navigationController pushViewController:tvc animated:YES] ;
     }
 }
+
 -(void)receivePhotoDetails:(NSNotification *)notification{
     Albums * album = self.albums[self.indexPath.row] ;
     UIImageView * imageView = notification.object ;
     [album.photoDetails addObject:imageView] ;
+    [self writeToFile] ;
+    
+}
+//数据持久化
+-(void)writeToFile{
+    NSString * file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"albums.data"] ;
+    [NSKeyedArchiver archiveRootObject:self.albums toFile:file];
+}
+//归档
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.albums forKey:@"albums"] ;
+}
+//解档
+-(instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder] ;
+    if(self){
+        self.albums = [aDecoder decodeObjectForKey:@"albums"] ;
+    }
+    return self ;
 }
 
 //处理 新建相册
@@ -184,6 +225,7 @@
                                                           NSString * time =[formatter stringFromDate:[NSDate date]] ;
                                                           Albums * album = [[Albums alloc] initWithTitle:newAlbum.textFields.firstObject.text andCreateTime:time] ;
                                                           [self.albums addObject:album] ;
+                                                           [self writeToFile] ;
                                                           [self.tableView reloadData] ;
                                                         
                                                       }] ;
@@ -211,6 +253,7 @@
         [deleteCells addObject:self.albums[indexPath.row]] ;
     }
     [self.albums removeObjectsInArray:deleteCells] ;
+    [self writeToFile] ;
     [self.tableView reloadData] ;
 }
 
