@@ -37,7 +37,8 @@ static NSString * const reuseIdentifier = @"Cell";
     self.navigationController.navigationBar.hidden = NO ;
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPhoto)];
     UIBarButtonItem *deleteItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editActionPressed)] ;
-    self.navigationItem.rightBarButtonItems = @[addItem,deleteItem] ;
+    UIBarButtonItem *searchItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchCell)] ;
+    self.navigationItem.rightBarButtonItems = @[addItem,deleteItem,searchItem] ;
     //多选操作
     self.collectionView.allowsMultipleSelection = YES ;
     
@@ -215,4 +216,26 @@ static NSString * const reuseIdentifier = @"Cell";
     [[NSNotificationCenter defaultCenter] removeObserver:self] ;
 }
 
+
+//根据时间搜索指定图片
+-(void)searchCell{
+    UIAlertController * searchController = [UIAlertController alertControllerWithTitle:@"搜索" message:@"请输入拍摄时间" preferredStyle:UIAlertControllerStyleAlert] ;
+    [searchController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"yyyy/MM/dd HH:mm" ;
+    }] ;
+    UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString * searchString = searchController.textFields.firstObject.text ;
+        int count = 0 ;
+        for(NSString * string in self.dateArr){
+            if([string containsString:searchString]){
+                NSIndexPath * indexPath = [NSIndexPath indexPathWithIndex:count] ;
+                [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES] ;
+                break ;
+            }
+            count ++ ;
+        }
+    }] ;
+    [searchController addAction:okAction] ;
+    [self presentViewController:searchController animated:YES completion:nil] ;
+}
 @end

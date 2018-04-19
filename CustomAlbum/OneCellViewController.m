@@ -16,14 +16,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor whiteColor]] ;
+    [self.view setBackgroundColor:[UIColor blackColor]] ;
     // Do any additional setup after loading the view.
-    
-    NSLog(@"%@",time) ;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 20)] ;
-    [label setText:time] ;
+
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 200, 200, 20)] ;
+    [label setText:self.date] ;
+    [label setTextColor:[UIColor blackColor]] ;
+    [label setFont:[UIFont systemFontOfSize:18]] ;
+    [label setBackgroundColor:[UIColor clearColor]] ;
     [self.view addSubview:label] ;
+    //question：为什么视图大小会根据设置的尺寸的变化而变化？
+    [self.imageView setFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.width)] ;
+//    self.imageView.contentMode = UIViewContentModeCenter ;
     
+    [self.view addSubview:self.imageView] ;
+    
+    UIBarButtonItem * infoItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(showInfo)] ;
+    self.navigationItem.rightBarButtonItem = infoItem ;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,6 +40,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)showInfo{
+    UIAlertController * info = [UIAlertController alertControllerWithTitle:@"拍摄时间" message:self.date preferredStyle:UIAlertControllerStyleAlert] ;
+    UIAlertAction * ok = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil];
+    [info addAction:ok] ;
+    [self presentViewController:info animated:YES completion:nil] ;
+}
 /*
 #pragma mark - Navigation
 

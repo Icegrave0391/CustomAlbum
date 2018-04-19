@@ -151,7 +151,7 @@
         layout.itemSize = CGSizeMake(100.0, 100.0) ;
         layout.minimumLineSpacing =2 ;
         layout.minimumInteritemSpacing = 2 ;
-        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal ;
+        layout.scrollDirection = UICollectionViewScrollDirectionVertical ;
         PhotosCollectionViewController * tvc = [[PhotosCollectionViewController alloc] initWithCollectionViewLayout:layout] ;
         Albums * album = self.albums[indexPath.row] ;
         tvc.album = album ;
