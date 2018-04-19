@@ -25,7 +25,7 @@
     UILongPressGestureRecognizer * cell = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewCellLongPressed:)] ;
     [self.tableView addGestureRecognizer:cell] ;
     
-    //配置self.albums   ****应该配合数据持久化*******待实现
+    //配置self.albums
     self.albums = [[NSMutableArray alloc] init] ;
     //定制navigation bar
     self.navigationController.navigationBar.hidden = NO ;
@@ -34,7 +34,7 @@
     UIBarButtonItem * rightItemDelete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeSelectedCells)];
     self.navigationItem.rightBarButtonItems = @[rightItemAdd,rightItemDelete] ;
     //设置photodetails通知信息
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePhotoDetails:) name:@"PhotoDetails" object:nil] ;
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePhotoDetails:) name:@"PhotoDetails" object:nil] ;
     //self.navigationItem.rightBarButtonItem = rightItem ;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -51,12 +51,12 @@
     if(!self.albums){
         self.albums = [[NSMutableArray alloc] init] ;
     }
-    else{
-        for(Albums * album in self.albums){
-            UIImageView * imageView = album.photoDetails.firstObject ;
-            NSLog(@"imageView:%@",imageView) ;
-        }
-    }
+//    else{
+//        for(Albums * album in self.albums){
+//            UIImageView * imageView = album.photoDetails.firstObject ;
+////            NSLog(@"imageView:%@",imageView) ;
+//        }
+//    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
     [self.tableView reloadData] ;
 }
@@ -76,7 +76,7 @@
     if([self.albums count]==0){
         [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone] ;
     }
-    NSLog(@"删除以前%@",self.albums) ;
+//    NSLog(@"删除以前%@",self.albums) ;
     return [self.albums count];
 }
 
@@ -86,7 +86,7 @@
     [tableView registerClass:[AlbumCell class] forCellReuseIdentifier:cellID] ;
     AlbumCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath] ;
     [cell setWithAlbum:[self.albums objectAtIndex:indexPath.row]] ;
-    NSLog(@"%@",cell) ;
+//    NSLog(@"%@",cell) ;
     return cell ;
 }
 //设置正确行高
@@ -103,7 +103,7 @@
         [self.albums removeObjectAtIndex:indexPath.row] ;
         [self writeToFile] ;
         [tableView reloadData] ;
-        NSLog(@"删除以后%@",self.albums) ;
+//        NSLog(@"删除以后%@",self.albums) ;
     }];
     NSArray *array = [NSArray arrayWithObject:delete] ;
     return array ;
@@ -143,15 +143,7 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 //点击相册单元格处理
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(!self.tableView.editing){
@@ -163,7 +155,7 @@
         PhotosCollectionViewController * tvc = [[PhotosCollectionViewController alloc] initWithCollectionViewLayout:layout] ;
         Albums * album = self.albums[indexPath.row] ;
         tvc.album = album ;
-        tvc.receivePhotoDetails = ^(UIImageView *imageView) {
+        tvc.receivePhotoDetails = ^(NSMutableArray *arr) {
             [self writeToFile] ;
         };
         self.indexPath = indexPath ;                          //用于之后准确设置albums中的正确相册
@@ -172,18 +164,21 @@
     }
 }
 
--(void)receivePhotoDetails:(NSNotification *)notification{
-    Albums * album = self.albums[self.indexPath.row] ;
-    UIImageView * imageView = notification.object ;
-    [album.photoDetails addObject:imageView] ;
-    [self writeToFile] ;
-    
-}
+//-(void)receivePhotoDetails:(NSNotification *)notification{
+//    NSLog(@"NO2333");
+////    Albums * album = self.albums[self.indexPath.row] ;
+////    UIImageView * imageView = notification.object ;
+////    [album.photoDetails addObject:imageView] ;
+//    [self writeToFile] ;
+//
+//}
 //数据持久化
 -(void)writeToFile{
     NSString * file = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"albums.data"] ;
     [NSKeyedArchiver archiveRootObject:self.albums toFile:file];
 }
+
+
 //归档
 -(void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.albums forKey:@"albums"] ;

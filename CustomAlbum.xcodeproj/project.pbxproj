@@ -18,6 +18,7 @@
 		082EE81E207E02F30058348A /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE81D207E02F30058348A /* AlbumViewController.m */; };
 		082EE828207E2B710058348A /* Albums.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE827207E2B710058348A /* Albums.m */; };
 		082EE82B207E2EB10058348A /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE82A207E2EB10058348A /* AlbumCell.m */; };
+		088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088CCBE220861E9900FE7203 /* OneCellViewController.m */; };
 		08DDCB842080B1A600D348F7 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */; };
 		08DDCB872080B1C400D348F7 /* PhotosCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,8 @@
 		082EE827207E2B710058348A /* Albums.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Albums.m; sourceTree = "<group>"; };
 		082EE829207E2EB10058348A /* AlbumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlbumCell.h; sourceTree = "<group>"; };
 		082EE82A207E2EB10058348A /* AlbumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
+		088CCBE120861E9900FE7203 /* OneCellViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneCellViewController.h; sourceTree = "<group>"; };
+		088CCBE220861E9900FE7203 /* OneCellViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneCellViewController.m; sourceTree = "<group>"; };
 		08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewController.h; sourceTree = "<group>"; };
 		08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosCollectionViewController.m; sourceTree = "<group>"; };
 		08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewCell.h; sourceTree = "<group>"; };
@@ -130,6 +133,8 @@
 				08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */,
 				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
 				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
+				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
+				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
 				082EE7F3207DFBEF0058348A /* Assets.xcassets */,
 				082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */,
@@ -298,6 +303,7 @@
 				082EE7FA207DFBF00058348A /* main.m in Sources */,
 				082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */,
 				082EE82B207E2EB10058348A /* AlbumCell.m in Sources */,
+				088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

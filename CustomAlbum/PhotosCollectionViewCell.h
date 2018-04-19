@@ -10,6 +10,8 @@
 @class Albums ;
 @interface PhotosCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic, strong)UIImageView * imageView ;
--(void)setWithPhotoImage:(UIImage *)image ;
+@property(nonatomic, strong) UIImageView * imageView ;
+@property(nonatomic, strong) UIButton * deleteButton ;
+@property(nonatomic, assign) BOOL isDeleting ;
+
 @end

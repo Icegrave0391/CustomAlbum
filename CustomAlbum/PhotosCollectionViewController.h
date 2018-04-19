@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 @class Albums ;
 
 @interface PhotosCollectionViewController : UICollectionViewController
-@property(nonatomic, strong) Albums * album ;
-@property void(^receivePhotoDetails)(UIImageView * imageView);
+@property(nonatomic, strong) Albums * album ;    //数据由上一个controller传入加载
+@property(nonatomic, strong) NSMutableArray * dateArr ;    //使用归档加载
+
+@property void(^receivePhotoDetails)() ;
 @end
