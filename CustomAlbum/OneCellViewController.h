@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
+@class DrawView ;
 @interface OneCellViewController : UIViewController
 
 @property(nonatomic, strong) NSString * date ;
 @property(nonatomic, strong) UIImageView * imageView ;
 
+@property(nonatomic, strong) DrawView * drawView ;
 @end
