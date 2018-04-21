@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0803014B208B2D7700A954F3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0803014A208B2D7700A954F3 /* CoreLocation.framework */; };
 		082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7EB207DFBEF0058348A /* AppDelegate.m */; };
 		082EE7EF207DFBEF0058348A /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE7EE207DFBEF0058348A /* MainMenu.m */; };
 		082EE7F2207DFBEF0058348A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 082EE7F0207DFBEF0058348A /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0803014A208B2D7700A954F3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		082EE7E7207DFBEF0058348A /* CustomAlbum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomAlbum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		082EE7EA207DFBEF0058348A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		082EE7EB207DFBEF0058348A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0803014B208B2D7700A954F3 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +105,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08030149208B2D7700A954F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0803014A208B2D7700A954F3 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		082EE7DE207DFBEF0058348A = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +120,7 @@
 				082EE802207DFBF00058348A /* CustomAlbumTests */,
 				082EE80D207DFBF00058348A /* CustomAlbumUITests */,
 				082EE7E8207DFBEF0058348A /* Products */,
+				08030149208B2D7700A954F3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,20 +143,20 @@
 				082EE827207E2B710058348A /* Albums.m */,
 				082EE829207E2EB10058348A /* AlbumCell.h */,
 				082EE82A207E2EB10058348A /* AlbumCell.m */,
+				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
+				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
+				0840C60E208A11CE00E3A1CB /* DrawPath.h */,
+				0840C60F208A11CE00E3A1CB /* DrawPath.m */,
+				0840C611208A120A00E3A1CB /* DrawView.h */,
+				0840C612208A120A00E3A1CB /* DrawView.m */,
 				082EE7ED207DFBEF0058348A /* MainMenu.h */,
 				082EE7EE207DFBEF0058348A /* MainMenu.m */,
 				082EE81C207E02F30058348A /* AlbumViewController.h */,
 				082EE81D207E02F30058348A /* AlbumViewController.m */,
 				08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */,
 				08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */,
-				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
-				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
 				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
 				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
-				0840C60E208A11CE00E3A1CB /* DrawPath.h */,
-				0840C60F208A11CE00E3A1CB /* DrawPath.m */,
-				0840C611208A120A00E3A1CB /* DrawView.h */,
-				0840C612208A120A00E3A1CB /* DrawView.m */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
 				082EE7F3207DFBEF0058348A /* Assets.xcassets */,
 				082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */,

@@ -42,11 +42,6 @@ static NSString * const reuseIdentifier = @"Cell";
     //多选操作
     self.collectionView.allowsMultipleSelection = YES ;
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-
-    
-    
     // Register cell classes
     [self.collectionView registerClass:[PhotosCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     CellState = NormalState ;
@@ -56,6 +51,9 @@ static NSString * const reuseIdentifier = @"Cell";
     if(!self.dateArr){
         self.dateArr = [[NSMutableArray alloc] init] ;
     }
+    
+    //保存涂鸦后的图片
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(graffitiedSaved:) name:@"GraffitiSaveNotification" object:nil] ;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,6 +118,7 @@ static NSString * const reuseIdentifier = @"Cell";
     UIImageView * imageView = [self.album.photoDetails objectAtIndex:indexPath.row] ;
     tvc.imageView = imageView ;
     tvc.date = self.dateArr[indexPath.row] ;
+    self.indexPath = indexPath ;
     NSLog(@"cell date : %@",tvc.date) ;
     [self.navigationController pushViewController:tvc animated:YES] ;
 }
@@ -167,12 +166,19 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [self configureAlbum:image] ;
 }
+//配置相册（保留通过相册写入的图片 & 处理涂鸦图片
 -(void)configureAlbum:(UIImage *)image{
     UIImageView * imageView = [[UIImageView alloc] initWithImage:image] ;
     [self.album.photoDetails addObject:imageView] ;
     [self.collectionView reloadData] ;
     self.receivePhotoDetails();
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhotoDetails" object:imageView] ;
+}
+-(void)graffitiedSaved:(NSNotification *)notification{
+    UIImageView * imageView = [[UIImageView alloc] initWithImage:notification.object] ;
+    self.album.photoDetails[self.indexPath.row] = imageView ;
+    [self.collectionView reloadData] ;
+    self.receivePhotoDetails() ;
 }
 
 //批量删除照片
@@ -228,7 +234,7 @@ static NSString * const reuseIdentifier = @"Cell";
         int count = 0 ;
         for(NSString * string in self.dateArr){
             if([string containsString:searchString]){
-                NSIndexPath * indexPath = [NSIndexPath indexPathWithIndex:count] ;
+                NSIndexPath * indexPath = [NSIndexPath indexPathForItem:count inSection:0] ;
                 [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES] ;
                 break ;
             }
