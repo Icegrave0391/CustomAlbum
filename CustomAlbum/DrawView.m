@@ -41,7 +41,6 @@
     [_path addLineToPoint:currentPoint] ;
     [self setNeedsDisplay] ;
 }
-
 -(void)clear{
     [self.pathArr removeAllObjects] ;
     [self setNeedsDisplay] ;

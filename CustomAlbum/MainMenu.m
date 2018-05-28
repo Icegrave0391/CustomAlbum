@@ -37,6 +37,10 @@
     
         
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated] ;
+    self.navigationController.navigationBar.hidden = YES ;
+}
 -(void)pushInAlbumViewController{
     AlbumViewController * tvc = [[AlbumViewController alloc] init] ;
     [self.navigationController pushViewController:tvc animated:YES] ;

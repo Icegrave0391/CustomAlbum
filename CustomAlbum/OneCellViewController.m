@@ -8,6 +8,9 @@
 
 #import "OneCellViewController.h"
 #import "DrawView.h"
+#import <AFNetworking/AFNetworking.h>
+#import "QNToken.h"
+#import <QiniuSDK.h>
 
 @interface OneCellViewController ()<CLLocationManagerDelegate, MKAnnotation>
 
@@ -30,31 +33,36 @@
     [self.view addSubview:self.drawView] ;
     
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0.8*self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height*0.2)] ;
-    [view setBackgroundColor:[UIColor darkGrayColor]] ;
+    [view setBackgroundColor:[UIColor colorWithRed:0.2 green:0.5 blue:0.8 alpha:0.5]] ;
     [self.view addSubview:view] ;
+//url label set up
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height*0.5)] ;
-    [label setText:@"请选择颜色:(算了就一种颜色)"] ;
-    [view addSubview:label] ;
-//    UIButton * redButton = [[UIButton alloc] initWithFrame:CGRectMake(0,self.view.bounds.size.height*0.9,1/3*self.view.bounds.size.width, self.view.bounds.size.height*0.1)] ;
-//    [redButton setBackgroundColor:[UIColor redColor]] ;
-    UIButton *blackButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 50, self.view.bounds.size.width,10)] ;
-    [blackButton setBackgroundColor:[UIColor blackColor]] ;
-    blackButton.layer.cornerRadius = 30.f ;
-    [blackButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside] ;
-    [view addSubview:blackButton] ;
-
-    [view addSubview:self.locationLabel1] ;
-    [view addSubview:self.locationLabel2] ;
-//    UIButton * blackButton = [[UIButton alloc] initWithFrame:CGRectMake(1/3*view.bounds.size.width, self.view.bounds.size.height*0.9, 1/3*self.view.bounds.size.width, self.view.bounds.size.height*0.1)] ;
-//    [blackButton setBackgroundColor:[UIColor blackColor]] ;
-//    [view addSubview:blackButton] ;
-//
-//    UIButton * greenButton = [[UIButton alloc] initWithFrame:CGRectMake(2/3*view.bounds.size.width, self.view.bounds.size.height*0.9, 1/3*self.view.bounds.size.width,self.view.bounds.size.height*0.1)] ;
-//    [greenButton setBackgroundColor:[UIColor greenColor]] ;
-//    [view addSubview:greenButton] ;
+    [label setText:@"地址:"] ;
+    [label setTextColor:[UIColor whiteColor]] ;
+    [label setBackgroundColor:[UIColor clearColor]] ;
+    self.urlLabel = label ;
+    [view addSubview:_urlLabel] ;
+//upload button set up
+    UIButton * upLoadButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width*0.2, self.view.bounds.size.height*0.6, self.view.bounds.size.width*0.6, self.view.bounds.size.width*0.2)] ;
+    upLoadButton.layer.cornerRadius = 10.f ;
+    
+    [upLoadButton addTarget:self action:@selector(upLoadImage) forControlEvents:UIControlEventTouchUpInside] ;
+    upLoadButton.backgroundColor = [UIColor colorWithRed:0.3 green:0.5 blue:0.7 alpha:0.3] ;
+    
+    [upLoadButton setTitle:@"上传" forState:UIControlStateNormal] ;
+    [self.view addSubview:upLoadButton] ;
+//    [view addSubview:self.locationLabel1] ;
+//    [view addSubview:self.locationLabel2] ;
+    
+//progressView set up
+    [self.progressView setFrame:CGRectMake(self.view.bounds.size.width*0.2, self.view.bounds.size.height*0.6, self.view.bounds.size.width*0.6, self.view.bounds.size.width*0.2)] ;
+    NSLog(@"%lf %lf",self.progressView.frame.size.width, self.progressView.frame.size.height) ;
+    
+    NSLog(@"%lf %lf",upLoadButton.frame.size.width, upLoadButton.frame.size.height) ;
+    [self.view addSubview:_progressView] ;
 
     if(!_labelArr)_labelArr = [[NSMutableArray alloc] init] ;
-    
+    //navigation bar item configure
     UIBarButtonItem * infoItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(showInfo)] ;
     UIBarButtonItem * undoItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemUndo target:self action:@selector(undo)] ;
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)] ;
@@ -116,6 +124,27 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark 惰性实例化
+-(UIProgressView *)progressView{
+    if(!_progressView){
+        _progressView = [[UIProgressView alloc] init] ;
+        self.progressView.layer.cornerRadius = 10.f ;
+        self.progressView.backgroundColor = [UIColor redColor] ;
+        self.progressView.alpha = 0.5 ;
+        self.progressView.progressTintColor = [UIColor yellowColor] ;
+        self.progressView.trackTintColor = [UIColor clearColor] ;
+        self.progressView.progress = 0 ;
+        [_progressView setProgressViewStyle:UIProgressViewStyleDefault] ;
+    }
+    return _progressView ;
+}
+
+-(UILabel *)urlLabel{
+    if(!_urlLabel){
+        _urlLabel = [[UILabel alloc] init] ;
+    }
+    return _urlLabel ;
+}
 -(UILabel *)locationLabel1{
     if(!_locationLabel1){
         _locationLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width-60, 30)] ;
@@ -216,4 +245,133 @@
     [super viewDidDisappear:animated] ;
     [self.locationManager stopUpdatingLocation] ;
 }
+
+#pragma mark AFNetworking
+
+
+//-(void)upLoadImage{
+//    NSLog(@"hh") ;
+//    NSString *url = @"http://upload.qiniup.com" ;
+//
+//
+//    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager] ;
+//    NSString * accseeKey = @"vN_MxTTJyh1Yo6pZIcx6xo6Dbh0orSrILYbzYTFp" ;
+//    NSString * secretKey = @"uqH2Pt1GC5t_6ReiqqUk11pDgW0T8R1GbP_eBpoU" ;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+//    formatter.dateFormat = @"yyyyMMddHHmmss" ;
+//    NSString *str = [formatter stringFromDate:[NSDate date]] ;
+//    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+//    NSString * scope = [NSString stringWithFormat:@"chuqi:%@",fileName] ;
+//
+//    NSString * token = [QNToken createTokenWithScope:scope accessKey:accseeKey secretKey:secretKey] ;
+//
+//    sessionManager.requestSerializer = [AFJSONRequestSerializer serializer] ;
+//    [sessionManager.requestSerializer setValue:[NSString stringWithFormat:@" UpToken %@",token] forHTTPHeaderField:@"Authorization"] ;
+//    [sessionManager.requestSerializer setValue:@" application/json" forHTTPHeaderField:@"Content-Type"] ;
+//    [sessionManager.requestSerializer setValue:fileName forHTTPHeaderField:@"fileName"] ;
+//
+//    UIImage *image = self.imageView.image ;
+//    NSData *imageData = UIImageJPEGRepresentation(image, 1) ;
+//
+//    NSString * fileBinaryData = [NSString stringWithFormat:@"%@",imageData] ;
+//  //  NSData * fileBinaryData = [fileBinaryDataString dataUsingEncoding:NSUTF8StringEncoding] ;
+//    [sessionManager.requestSerializer setValue:fileBinaryData forHTTPHeaderField:@"fileBinaryData"] ;
+//
+//
+//    [sessionManager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        // 上传文件
+//        UIImage *image = self.imageView.image ;
+//        NSData *imageData = UIImageJPEGRepresentation(image, 1) ;
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+//        formatter.dateFormat = @"yyyyMMddHHmmss" ;
+//        NSString *str = [formatter stringFromDate:[NSDate date]] ;
+//        NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+//
+//        [formData appendPartWithFileData:imageData name:@"image" fileName:fileName mimeType:@"image/jpg"];
+//    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@",,,,,,");
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        NSLog(@"%@",error);
+//    }];
+//
+//}
+-(void)upLoadImage{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    formatter.dateFormat = @"yyyyMMddHHmmss" ;
+    NSString *str = [formatter stringFromDate:[NSDate date]] ;
+    NSString *fileName = [NSString stringWithFormat:@"%@.jpg", str];
+    
+    UIImage * img = self.imageView.image ;
+    [self uploadImage:img WithName:fileName] ;
+}
+-(void)uploadImage:(UIImage *)image WithName:(NSString *)name{
+    NSString * accseeKey = @"vN_MxTTJyh1Yo6pZIcx6xo6Dbh0orSrILYbzYTFp" ;
+    NSString * secretKey = @"uqH2Pt1GC5t_6ReiqqUk11pDgW0T8R1GbP_eBpoU" ;
+    NSString * scope = [NSString stringWithFormat:@"chuqi:%@",name] ;
+    
+    NSString * uploadToken = [QNToken createTokenWithScope:scope accessKey:accseeKey secretKey:secretKey] ;
+    NSData * imgData = UIImageJPEGRepresentation(image, 1) ;
+    NSString * url = @"http://upload.qiniup.com" ;
+    NSString * key = name ;
+    
+    NSDictionary * header = @{
+                              @"Authorization":[NSString stringWithFormat:@"UpToken %@",uploadToken] ,
+                              @"Content-Type": @"application/json" ,
+                              @"Host": url ,
+                              } ;
+    
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager manager] ;
+    [manager POST:url parameters:header constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFormData:[key dataUsingEncoding:NSUTF8StringEncoding] name:@"key"] ;
+        [formData appendPartWithFormData:[uploadToken dataUsingEncoding:NSUTF8StringEncoding] name:@"token"] ;
+        [formData appendPartWithFormData:imgData name:@"file"] ;
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"%lf", 1.0 * uploadProgress.completedUnitCount / uploadProgress.totalUnitCount) ;
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"success!!!!!!!\n%@",responseObject) ;
+        self.urlLabel.numberOfLines = 0 ;
+        [self.urlLabel setText:[NSString stringWithFormat:@"地址: http://p8rhcoup7.bkt.clouddn.com/%@",key]] ;
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"failed!!!!!!\n%@",error) ;
+    }] ;
+}
+
+
+
+//-(void)upLoadImageUsingSDK{
+//    NSLog(@"sdk") ;
+//    QNConfiguration *config = [QNConfiguration build:^(QNConfigurationBuilder *builder) {
+//        builder.zone = [QNFixedZone zone0];
+//    }];
+//    //重用uploadManager。一般地，只需要创建一个uploadManager对象
+//    NSString * accseeKey = @"vN_MxTTJyh1Yo6pZIcx6xo6Dbh0orSrILYbzYTFp" ;
+//    NSString * secretKey = @"uqH2Pt1GC5t_6ReiqqUk11pDgW0T8R1GbP_eBpoU" ;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+//    formatter.dateFormat = @"yyyyMMddHHmmss" ;
+//    NSString *str = [formatter stringFromDate:[NSDate date]] ;
+//    NSString *fileName = [NSString stringWithFormat:@"%@", str];
+//    NSString * scope = [NSString stringWithFormat:@"chuqi:%@",fileName] ;
+//
+//    NSString * token = [QNToken createTokenWithScope:scope accessKey:accseeKey secretKey:secretKey] ;
+////    NSString * key = @"指定七牛服务上的文件名，或nil";
+////    NSString * filePath = @"要上传的文件路径";
+////    QNUploadManager *upManager = [[QNUploadManager alloc] initWithConfiguration:config];
+////params:nil
+////checkCrc:NO
+////cancellationSignal:nil];
+//    UIImage *image = self.imageView.image ;
+//    NSData *imageData = UIImageJPEGRepresentation(image, 1) ;
+////    NSString * string = @"FXXK U!" ;
+////    NSData * testData = [string dataUsingEncoding:NSUTF8StringEncoding] ;
+////    NSString *testFileName = [NSString stringWithFormat:@"%@", str];
+//
+//    QNUploadManager * upManager = [[QNUploadManager alloc] initWithConfiguration:config] ;
+//    [upManager putData:imageData key:fileName token:token
+//              complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+//                  NSLog(@"info = %@\n", info);
+//                  NSLog(@"key = %@\n",key);
+//                  NSLog(@"resp = %@\n", resp);
+//              } option:nil];
+//}
+
 @end
