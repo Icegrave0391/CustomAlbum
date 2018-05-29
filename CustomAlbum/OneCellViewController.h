@@ -29,4 +29,7 @@
 
 //起始标注点
 @property(nonatomic, strong) CLLocationManager * locationManager ;
+//url
+@property(nonatomic, strong) UILabel * urlLabel ;
+@property(nonatomic, strong) UIProgressView * progressView ;
 @end

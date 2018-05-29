@@ -23,6 +23,7 @@
 		0840C613208A120A00E3A1CB /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840C612208A120A00E3A1CB /* DrawView.m */; };
 		088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088CCBE220861E9900FE7203 /* OneCellViewController.m */; };
 		08C8AE3C20B03E4700F02874 /* QNToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3B20B03E4700F02874 /* QNToken.m */; };
+		08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */; };
 		08DDCB842080B1A600D348F7 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */; };
 		08DDCB872080B1C400D348F7 /* PhotosCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */; };
 		A165A598B9BD2270BC880320 /* libPods-CustomAlbum.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5B47B4D479730E55B9B60D /* libPods-CustomAlbum.a */; };
@@ -79,6 +80,8 @@
 		088CCBE220861E9900FE7203 /* OneCellViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneCellViewController.m; sourceTree = "<group>"; };
 		08C8AE3A20B03E4700F02874 /* QNToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNToken.h; sourceTree = "<group>"; };
 		08C8AE3B20B03E4700F02874 /* QNToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNToken.m; sourceTree = "<group>"; };
+		08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryTaskController.h; sourceTree = "<group>"; };
+		08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryTaskController.m; sourceTree = "<group>"; };
 		08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewController.h; sourceTree = "<group>"; };
 		08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosCollectionViewController.m; sourceTree = "<group>"; };
 		08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewCell.h; sourceTree = "<group>"; };
@@ -181,6 +184,8 @@
 				08C8AE3B20B03E4700F02874 /* QNToken.m */,
 				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
 				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
+				08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */,
+				08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
 				082EE7F3207DFBEF0058348A /* Assets.xcassets */,
 				082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */,
@@ -416,6 +421,7 @@
 			files = (
 				082EE828207E2B710058348A /* Albums.m in Sources */,
 				08DDCB872080B1C400D348F7 /* PhotosCollectionViewCell.m in Sources */,
+				08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */,
 				082EE81E207E02F30058348A /* AlbumViewController.m in Sources */,
 				082EE7EF207DFBEF0058348A /* MainMenu.m in Sources */,
 				0840C613208A120A00E3A1CB /* DrawView.m in Sources */,

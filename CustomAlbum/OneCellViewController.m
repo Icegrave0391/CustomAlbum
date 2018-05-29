@@ -13,7 +13,8 @@
 #import <QiniuSDK.h>
 
 @interface OneCellViewController ()<CLLocationManagerDelegate, MKAnnotation>
-
+//new controller
+//@property(nonatomic, strong)
 @end
 
 @implementation OneCellViewController
@@ -56,11 +57,18 @@
     
 //progressView set up
     [self.progressView setFrame:CGRectMake(self.view.bounds.size.width*0.2, self.view.bounds.size.height*0.6, self.view.bounds.size.width*0.6, self.view.bounds.size.width*0.2)] ;
-    NSLog(@"%lf %lf",self.progressView.frame.size.width, self.progressView.frame.size.height) ;
-    
-    NSLog(@"%lf %lf",upLoadButton.frame.size.width, upLoadButton.frame.size.height) ;
+    self.progressView.transform = CGAffineTransformMakeScale(1.0f, 5.0f);
     [self.view addSubview:_progressView] ;
 
+// task buttons set up
+    UIButton * historyTaskButton = [[UIButton alloc] initWithFrame:CGRectMake(0, view.bounds.size.height * 0.5, view.bounds.size.width * 0.5, view.bounds.size.height * 0.5)] ;
+    historyTaskButton.backgroundColor = [UIColor darkGrayColor] ;
+    historyTaskButton.layer.cornerRadius = 10.f ;
+    [historyTaskButton setTitle:@"已完成任务" forState:UIControlStateNormal] ;
+    [historyTaskButton addTarget:self action:@selector(pushToHistoryTaskController) forControlEvents:UIControlEventTouchUpInside] ;
+    
+    
+    
     if(!_labelArr)_labelArr = [[NSMutableArray alloc] init] ;
     //navigation bar item configure
     UIBarButtonItem * infoItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(showInfo)] ;
@@ -129,7 +137,7 @@
     if(!_progressView){
         _progressView = [[UIProgressView alloc] init] ;
         self.progressView.layer.cornerRadius = 10.f ;
-        self.progressView.backgroundColor = [UIColor redColor] ;
+        self.progressView.backgroundColor = [UIColor clearColor] ;
         self.progressView.alpha = 0.5 ;
         self.progressView.progressTintColor = [UIColor yellowColor] ;
         self.progressView.trackTintColor = [UIColor clearColor] ;
@@ -326,11 +334,17 @@
         [formData appendPartWithFormData:[uploadToken dataUsingEncoding:NSUTF8StringEncoding] name:@"token"] ;
         [formData appendPartWithFormData:imgData name:@"file"] ;
     } progress:^(NSProgress * _Nonnull uploadProgress) {
+        dispatch_queue_t queue = dispatch_get_main_queue() ;
+        dispatch_async(queue, ^{
+            self.progressView.progress = 1.0 * uploadProgress.completedUnitCount/ uploadProgress.totalUnitCount ;
+        }) ;
         NSLog(@"%lf", 1.0 * uploadProgress.completedUnitCount / uploadProgress.totalUnitCount) ;
+        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"success!!!!!!!\n%@",responseObject) ;
         self.urlLabel.numberOfLines = 0 ;
         [self.urlLabel setText:[NSString stringWithFormat:@"地址: http://p8rhcoup7.bkt.clouddn.com/%@",key]] ;
+        self.progressView.progress = 0 ;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed!!!!!!\n%@",error) ;
     }] ;
@@ -373,5 +387,8 @@
 //                  NSLog(@"resp = %@\n", resp);
 //              } option:nil];
 //}
-
+#pragma mark Controller跳转
+-(void)pushToHistoryTaskController{
+    
+}
 @end
