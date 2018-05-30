@@ -10,4 +10,6 @@
 
 @interface HistoryTaskController : UITableViewController
 
+@property(nonatomic, strong)NSMutableArray * historyTaskArr ;
+
 @end

@@ -24,6 +24,9 @@
 		088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088CCBE220861E9900FE7203 /* OneCellViewController.m */; };
 		08C8AE3C20B03E4700F02874 /* QNToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3B20B03E4700F02874 /* QNToken.m */; };
 		08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */; };
+		08C8AE4220BE931E00F02874 /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE4120BE931E00F02874 /* TaskModel.m */; };
+		08C8AE4520BEA95C00F02874 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE4420BEA95C00F02874 /* DataBase.m */; };
+		08C8AE4820BEE19300F02874 /* historyTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE4720BEE19300F02874 /* historyTaskCell.m */; };
 		08DDCB842080B1A600D348F7 /* PhotosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */; };
 		08DDCB872080B1C400D348F7 /* PhotosCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */; };
 		A165A598B9BD2270BC880320 /* libPods-CustomAlbum.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5B47B4D479730E55B9B60D /* libPods-CustomAlbum.a */; };
@@ -82,6 +85,12 @@
 		08C8AE3B20B03E4700F02874 /* QNToken.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNToken.m; sourceTree = "<group>"; };
 		08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryTaskController.h; sourceTree = "<group>"; };
 		08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryTaskController.m; sourceTree = "<group>"; };
+		08C8AE4020BE931E00F02874 /* TaskModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
+		08C8AE4120BE931E00F02874 /* TaskModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
+		08C8AE4320BEA95C00F02874 /* DataBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
+		08C8AE4420BEA95C00F02874 /* DataBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
+		08C8AE4620BEE19300F02874 /* historyTaskCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = historyTaskCell.h; sourceTree = "<group>"; };
+		08C8AE4720BEE19300F02874 /* historyTaskCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = historyTaskCell.m; sourceTree = "<group>"; };
 		08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewController.h; sourceTree = "<group>"; };
 		08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosCollectionViewController.m; sourceTree = "<group>"; };
 		08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotosCollectionViewCell.h; sourceTree = "<group>"; };
@@ -164,26 +173,32 @@
 			children = (
 				082EE7EA207DFBEF0058348A /* AppDelegate.h */,
 				082EE7EB207DFBEF0058348A /* AppDelegate.m */,
-				082EE826207E2B710058348A /* Albums.h */,
-				082EE827207E2B710058348A /* Albums.m */,
-				082EE829207E2EB10058348A /* AlbumCell.h */,
-				082EE82A207E2EB10058348A /* AlbumCell.m */,
 				0840C60E208A11CE00E3A1CB /* DrawPath.h */,
 				0840C60F208A11CE00E3A1CB /* DrawPath.m */,
-				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
-				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
 				0840C611208A120A00E3A1CB /* DrawView.h */,
 				0840C612208A120A00E3A1CB /* DrawView.m */,
 				082EE7ED207DFBEF0058348A /* MainMenu.h */,
 				082EE7EE207DFBEF0058348A /* MainMenu.m */,
+				082EE826207E2B710058348A /* Albums.h */,
+				082EE827207E2B710058348A /* Albums.m */,
+				082EE829207E2EB10058348A /* AlbumCell.h */,
+				082EE82A207E2EB10058348A /* AlbumCell.m */,
 				082EE81C207E02F30058348A /* AlbumViewController.h */,
 				082EE81D207E02F30058348A /* AlbumViewController.m */,
+				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
+				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
 				08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */,
 				08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */,
 				08C8AE3A20B03E4700F02874 /* QNToken.h */,
 				08C8AE3B20B03E4700F02874 /* QNToken.m */,
 				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
 				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
+				08C8AE4020BE931E00F02874 /* TaskModel.h */,
+				08C8AE4120BE931E00F02874 /* TaskModel.m */,
+				08C8AE4320BEA95C00F02874 /* DataBase.h */,
+				08C8AE4420BEA95C00F02874 /* DataBase.m */,
+				08C8AE4620BEE19300F02874 /* historyTaskCell.h */,
+				08C8AE4720BEE19300F02874 /* historyTaskCell.m */,
 				08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */,
 				08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
@@ -420,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				082EE828207E2B710058348A /* Albums.m in Sources */,
+				08C8AE4820BEE19300F02874 /* historyTaskCell.m in Sources */,
 				08DDCB872080B1C400D348F7 /* PhotosCollectionViewCell.m in Sources */,
 				08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */,
 				082EE81E207E02F30058348A /* AlbumViewController.m in Sources */,
@@ -429,6 +445,8 @@
 				08DDCB842080B1A600D348F7 /* PhotosCollectionViewController.m in Sources */,
 				082EE7FA207DFBF00058348A /* main.m in Sources */,
 				08C8AE3C20B03E4700F02874 /* QNToken.m in Sources */,
+				08C8AE4220BE931E00F02874 /* TaskModel.m in Sources */,
+				08C8AE4520BEA95C00F02874 /* DataBase.m in Sources */,
 				082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */,
 				082EE82B207E2EB10058348A /* AlbumCell.m in Sources */,
 				088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */,
