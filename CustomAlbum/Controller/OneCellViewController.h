@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
 #import <MapKit/MapKit.h>
+#import "UploadTaskModel.h"
 @class DrawView ;
 @interface OneCellViewController : UIViewController
 
@@ -34,4 +35,7 @@
 @property(nonatomic, strong) UIProgressView * progressView ;
 
 //上传数组
+@property(nonatomic, strong)NSMutableArray * uploadArr ;
+@property(nonatomic, assign)NSInteger index ;
+
 @end

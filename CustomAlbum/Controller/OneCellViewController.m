@@ -14,7 +14,7 @@
 #import "DataBase.h"
 #import "TaskModel.h"
 #import "HistoryTaskController.h"
-
+#import "UploadingTaskController.h"
 
 @interface OneCellViewController ()<CLLocationManagerDelegate, MKAnnotation>
 //new controller
@@ -72,7 +72,12 @@
     [historyTaskButton addTarget:self action:@selector(pushToHistoryTaskController) forControlEvents:UIControlEventTouchUpInside] ;
     [view addSubview:historyTaskButton] ;
     
-    
+    UIButton * uploadingButton = [[UIButton alloc] initWithFrame:CGRectMake(view.bounds.size.width * 0.5, view.bounds.size.height * 0.5, view.bounds.size.width * 0.5, view.bounds.size.height * 0.5)] ;
+    uploadingButton.backgroundColor = [UIColor darkGrayColor] ;
+    uploadingButton.layer.cornerRadius = 10.f ;
+    [uploadingButton setTitle:@"正在上传" forState:UIControlStateNormal] ;
+    [uploadingButton addTarget:self action:@selector(pushToUploadTaskController) forControlEvents:UIControlEventTouchUpInside] ;
+    [view addSubview:uploadingButton] ;
     
     if(!_labelArr)_labelArr = [[NSMutableArray alloc] init] ;
     //navigation bar item configure
@@ -219,6 +224,18 @@
     }
     return _mapView ;
 }
+-(NSMutableArray *)uploadArr{
+    if(!_uploadArr){
+        _uploadArr = [[NSMutableArray alloc] init] ;
+    }
+    return _uploadArr ;
+}
+-(NSInteger)index{
+    if(!_index){
+        _index = 0 ;
+    }
+    return _index ;
+}
 
 #pragma mark MKMap
 -(CLLocationManager *)locationManager{
@@ -339,6 +356,11 @@
     
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager] ;
     [manager POST:url parameters:header constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        //设置上传数组
+        UploadTaskModel * task = [[UploadTaskModel alloc] init] ;
+        [task setImage:[UIImage imageWithData:imgData]] ;
+        [self.uploadArr addObject:task] ;
+        
         [formData appendPartWithFormData:[key dataUsingEncoding:NSUTF8StringEncoding] name:@"key"] ;
         [formData appendPartWithFormData:[uploadToken dataUsingEncoding:NSUTF8StringEncoding] name:@"token"] ;
         [formData appendPartWithFormData:imgData name:@"file"] ;
@@ -346,9 +368,12 @@
         dispatch_queue_t queue = dispatch_get_main_queue() ;
         dispatch_async(queue, ^{
             self.progressView.progress = 1.0 * uploadProgress.completedUnitCount/ uploadProgress.totalUnitCount ;
+            
+            CGFloat process = 1.0 * uploadProgress.completedUnitCount/uploadProgress.totalUnitCount ;
+            [self getProcess:process forIndex:self.index] ;
         }) ;
         
-        NSLog(@"%lf", 1.0 * uploadProgress.completedUnitCount / uploadProgress.totalUnitCount) ;
+//        NSLog(@"%lf", 1.0 * uploadProgress.completedUnitCount / uploadProgress.totalUnitCount) ;
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"success!!!!!!!\n%@",responseObject) ;
@@ -368,8 +393,11 @@
             //使用数据库持久化
             [[DataBase sharedDataBase] addHistoryTask:historyTask] ;
         });
+        //下一个上传任务
+        self.index ++ ;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"failed!!!!!!\n%@",error) ;
+        self.index ++ ;
     }] ;
 }
 
@@ -417,5 +445,21 @@
     HistoryTaskController * tvc = [[HistoryTaskController alloc] init] ;
     tvc.navigationItem.title = @"已完成任务" ;
     [self.navigationController pushViewController:tvc animated:YES] ;
+}
+//上传任务
+-(void)pushToUploadTaskController{
+    UploadingTaskController * tvc = [[UploadingTaskController alloc] init] ;
+    tvc.navigationItem.title = @"正在上传" ;
+    [self.navigationController pushViewController:tvc animated:YES] ;
+}
+
+#pragma mark 上传数组
+-(void)getProcess:(CGFloat)process forIndex:(NSInteger)index{
+    UploadTaskModel * task = self.uploadArr[index] ;
+    task.process = [NSNumber numberWithFloat:process] ;
+    [self pushUploadArr] ;
+}
+-(void)pushUploadArr{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"progress" object:self.uploadArr] ;
 }
 @end

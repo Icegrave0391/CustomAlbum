@@ -42,7 +42,13 @@
     UIProgressView * progressView = [[UIProgressView alloc] initWithFrame:progressRect] ;
     progressView.transform = CGAffineTransformMakeScale(1.0f, 10.0f) ;
     progressView.progress = [task.process floatValue] ;
-    
+    progressView.layer.cornerRadius = 10.f ;
+    progressView.backgroundColor = [UIColor clearColor] ;
+    progressView.alpha = 0.5 ;
+    progressView.progressTintColor = [UIColor yellowColor] ;
+    progressView.trackTintColor = [UIColor clearColor] ;
+
+    [progressView setProgressViewStyle:UIProgressViewStyleDefault] ;
     self.progressView = progressView ;
     [self.contentView addSubview:self.progressView] ;
 }

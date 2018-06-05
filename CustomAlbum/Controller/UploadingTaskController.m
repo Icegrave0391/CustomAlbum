@@ -1,27 +1,27 @@
 //
-//  HistoryTaskController.m
+//  UploadingTaskController.m
 //  CustomAlbum
 //
-//  Created by 张储祺 on 2018/5/29.
+//  Created by 张储祺 on 2018/6/5.
 //  Copyright © 2018年 张储祺. All rights reserved.
 //
 
-#import "HistoryTaskController.h"
+#import "UploadingTaskController.h"
 
-@interface HistoryTaskController ()
+@interface UploadingTaskController ()
 
 @end
 
-@implementation HistoryTaskController
+@implementation UploadingTaskController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProcessing:) name:@"progress" object:nil] ;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,24 +32,21 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1 ;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.uploadingTaskArr.count ;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    static NSString * cellID = @"cellID" ;
+    [tableView registerClass:[UploadingTaskCellTableViewCell class] forCellReuseIdentifier:cellID] ;
+    UploadingTaskCellTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath] ;
+    [cell setWithUploadingModel:self.uploadingTaskArr[indexPath.row]] ;
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -94,5 +91,43 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark table view delegate
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    tableView.rowHeight = 140 ;
+    return tableView.rowHeight ;
+}
 
+#pragma mark 惰性实例化
+-(NSMutableArray *)uploadingTaskArr{
+    if(!_uploadingTaskArr){
+        _uploadingTaskArr = [[NSMutableArray alloc] init] ;
+    }
+    return _uploadingTaskArr ;
+}
+
+-(void)uploadProcessing:(NSNotification *)notification{
+    self.uploadingTaskArr = (NSMutableArray *)notification.object ;
+    int i = 0 ;
+    for(UploadTaskModel * task in self.uploadingTaskArr){
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:i inSection:0] ;
+        [self configureCellWithTask:task forIndexPath:indexPath] ;
+        i++ ;
+    }
+    [self.tableView reloadData] ;
+}
+
+-(void)configureCellWithTask:(UploadTaskModel *)task forIndexPath:(NSIndexPath *)indexpath{
+//    NSLog(@"%@",indexpath) ;
+    UploadingTaskCellTableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexpath] ;
+    cell.progress = task.process ;
+//    NSLog(@"cell %@",cell) ;
+//    NSLog(@"%@",cell.progressView) ;
+//    NSLog(@"task:%f",[task.process floatValue]) ;
+    cell.progressView.progress = [cell.progress floatValue] ;
+//    NSLog(@" pro : %f",cell.progressView.progress) ;
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self] ;
+}
 @end
