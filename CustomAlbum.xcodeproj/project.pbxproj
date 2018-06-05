@@ -21,6 +21,9 @@
 		082EE82B207E2EB10058348A /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 082EE82A207E2EB10058348A /* AlbumCell.m */; };
 		0840C610208A11CE00E3A1CB /* DrawPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840C60F208A11CE00E3A1CB /* DrawPath.m */; };
 		0840C613208A120A00E3A1CB /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840C612208A120A00E3A1CB /* DrawView.m */; };
+		086419D520C67FD300692258 /* UploadingTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086419D420C67FD300692258 /* UploadingTaskController.m */; };
+		0872F73920C55C36005B0C21 /* UploadTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0872F73820C55C36005B0C21 /* UploadTaskModel.m */; };
+		0872F73C20C55E68005B0C21 /* UploadingTaskCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0872F73B20C55E68005B0C21 /* UploadingTaskCellTableViewCell.m */; };
 		088CCBE320861E9900FE7203 /* OneCellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088CCBE220861E9900FE7203 /* OneCellViewController.m */; };
 		08C8AE3C20B03E4700F02874 /* QNToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3B20B03E4700F02874 /* QNToken.m */; };
 		08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */; };
@@ -79,6 +82,12 @@
 		0840C60F208A11CE00E3A1CB /* DrawPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawPath.m; sourceTree = "<group>"; };
 		0840C611208A120A00E3A1CB /* DrawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawView.h; sourceTree = "<group>"; };
 		0840C612208A120A00E3A1CB /* DrawView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawView.m; sourceTree = "<group>"; };
+		086419D320C67FD300692258 /* UploadingTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadingTaskController.h; sourceTree = "<group>"; };
+		086419D420C67FD300692258 /* UploadingTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadingTaskController.m; sourceTree = "<group>"; };
+		0872F73720C55C36005B0C21 /* UploadTaskModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadTaskModel.h; sourceTree = "<group>"; };
+		0872F73820C55C36005B0C21 /* UploadTaskModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadTaskModel.m; sourceTree = "<group>"; };
+		0872F73A20C55E68005B0C21 /* UploadingTaskCellTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UploadingTaskCellTableViewCell.h; sourceTree = "<group>"; };
+		0872F73B20C55E68005B0C21 /* UploadingTaskCellTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadingTaskCellTableViewCell.m; sourceTree = "<group>"; };
 		088CCBE120861E9900FE7203 /* OneCellViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneCellViewController.h; sourceTree = "<group>"; };
 		088CCBE220861E9900FE7203 /* OneCellViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneCellViewController.m; sourceTree = "<group>"; };
 		08C8AE3A20B03E4700F02874 /* QNToken.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNToken.h; sourceTree = "<group>"; };
@@ -173,34 +182,10 @@
 			children = (
 				082EE7EA207DFBEF0058348A /* AppDelegate.h */,
 				082EE7EB207DFBEF0058348A /* AppDelegate.m */,
-				0840C60E208A11CE00E3A1CB /* DrawPath.h */,
-				0840C60F208A11CE00E3A1CB /* DrawPath.m */,
-				0840C611208A120A00E3A1CB /* DrawView.h */,
-				0840C612208A120A00E3A1CB /* DrawView.m */,
-				082EE7ED207DFBEF0058348A /* MainMenu.h */,
-				082EE7EE207DFBEF0058348A /* MainMenu.m */,
-				082EE826207E2B710058348A /* Albums.h */,
-				082EE827207E2B710058348A /* Albums.m */,
-				082EE829207E2EB10058348A /* AlbumCell.h */,
-				082EE82A207E2EB10058348A /* AlbumCell.m */,
-				082EE81C207E02F30058348A /* AlbumViewController.h */,
-				082EE81D207E02F30058348A /* AlbumViewController.m */,
-				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
-				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
-				08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */,
-				08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */,
-				08C8AE3A20B03E4700F02874 /* QNToken.h */,
-				08C8AE3B20B03E4700F02874 /* QNToken.m */,
-				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
-				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
-				08C8AE4020BE931E00F02874 /* TaskModel.h */,
-				08C8AE4120BE931E00F02874 /* TaskModel.m */,
-				08C8AE4320BEA95C00F02874 /* DataBase.h */,
-				08C8AE4420BEA95C00F02874 /* DataBase.m */,
-				08C8AE4620BEE19300F02874 /* historyTaskCell.h */,
-				08C8AE4720BEE19300F02874 /* historyTaskCell.m */,
-				08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */,
-				08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */,
+				0872F73320C5580A005B0C21 /* Tools */,
+				0872F73420C55833005B0C21 /* Model */,
+				0872F73520C55850005B0C21 /* View */,
+				0872F73620C55874005B0C21 /* Controller */,
 				082EE7F0207DFBEF0058348A /* Main.storyboard */,
 				082EE7F3207DFBEF0058348A /* Assets.xcassets */,
 				082EE7F5207DFBF00058348A /* LaunchScreen.storyboard */,
@@ -226,6 +211,68 @@
 				082EE810207DFBF00058348A /* Info.plist */,
 			);
 			path = CustomAlbumUITests;
+			sourceTree = "<group>";
+		};
+		0872F73320C5580A005B0C21 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				0840C60E208A11CE00E3A1CB /* DrawPath.h */,
+				0840C60F208A11CE00E3A1CB /* DrawPath.m */,
+				0840C611208A120A00E3A1CB /* DrawView.h */,
+				0840C612208A120A00E3A1CB /* DrawView.m */,
+				08C8AE3A20B03E4700F02874 /* QNToken.h */,
+				08C8AE3B20B03E4700F02874 /* QNToken.m */,
+				08C8AE4320BEA95C00F02874 /* DataBase.h */,
+				08C8AE4420BEA95C00F02874 /* DataBase.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		0872F73420C55833005B0C21 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				082EE826207E2B710058348A /* Albums.h */,
+				082EE827207E2B710058348A /* Albums.m */,
+				08C8AE4020BE931E00F02874 /* TaskModel.h */,
+				08C8AE4120BE931E00F02874 /* TaskModel.m */,
+				0872F73720C55C36005B0C21 /* UploadTaskModel.h */,
+				0872F73820C55C36005B0C21 /* UploadTaskModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0872F73520C55850005B0C21 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				08DDCB852080B1C400D348F7 /* PhotosCollectionViewCell.h */,
+				08DDCB862080B1C400D348F7 /* PhotosCollectionViewCell.m */,
+				082EE829207E2EB10058348A /* AlbumCell.h */,
+				082EE82A207E2EB10058348A /* AlbumCell.m */,
+				08C8AE4620BEE19300F02874 /* historyTaskCell.h */,
+				08C8AE4720BEE19300F02874 /* historyTaskCell.m */,
+				0872F73A20C55E68005B0C21 /* UploadingTaskCellTableViewCell.h */,
+				0872F73B20C55E68005B0C21 /* UploadingTaskCellTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0872F73620C55874005B0C21 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				082EE7ED207DFBEF0058348A /* MainMenu.h */,
+				082EE7EE207DFBEF0058348A /* MainMenu.m */,
+				082EE81C207E02F30058348A /* AlbumViewController.h */,
+				082EE81D207E02F30058348A /* AlbumViewController.m */,
+				08DDCB822080B1A600D348F7 /* PhotosCollectionViewController.h */,
+				08DDCB832080B1A600D348F7 /* PhotosCollectionViewController.m */,
+				088CCBE120861E9900FE7203 /* OneCellViewController.h */,
+				088CCBE220861E9900FE7203 /* OneCellViewController.m */,
+				08C8AE3D20BD7D7600F02874 /* HistoryTaskController.h */,
+				08C8AE3E20BD7D7600F02874 /* HistoryTaskController.m */,
+				086419D320C67FD300692258 /* UploadingTaskController.h */,
+				086419D420C67FD300692258 /* UploadingTaskController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		2CDBBE3889DD7123E97F32B7 /* Pods */ = {
@@ -440,12 +487,15 @@
 				08C8AE3F20BD7D7600F02874 /* HistoryTaskController.m in Sources */,
 				082EE81E207E02F30058348A /* AlbumViewController.m in Sources */,
 				082EE7EF207DFBEF0058348A /* MainMenu.m in Sources */,
+				0872F73C20C55E68005B0C21 /* UploadingTaskCellTableViewCell.m in Sources */,
 				0840C613208A120A00E3A1CB /* DrawView.m in Sources */,
 				0840C610208A11CE00E3A1CB /* DrawPath.m in Sources */,
 				08DDCB842080B1A600D348F7 /* PhotosCollectionViewController.m in Sources */,
 				082EE7FA207DFBF00058348A /* main.m in Sources */,
 				08C8AE3C20B03E4700F02874 /* QNToken.m in Sources */,
+				0872F73920C55C36005B0C21 /* UploadTaskModel.m in Sources */,
 				08C8AE4220BE931E00F02874 /* TaskModel.m in Sources */,
+				086419D520C67FD300692258 /* UploadingTaskController.m in Sources */,
 				08C8AE4520BEA95C00F02874 /* DataBase.m in Sources */,
 				082EE7EC207DFBEF0058348A /* AppDelegate.m in Sources */,
 				082EE82B207E2EB10058348A /* AlbumCell.m in Sources */,

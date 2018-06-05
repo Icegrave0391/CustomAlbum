@@ -16,7 +16,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     ViewController * navRootVC = [[ViewController alloc] init] ;
     UINavigationController * navVC = [[UINavigationController alloc] initWithRootViewController:navRootVC] ;
     //配置self.window
