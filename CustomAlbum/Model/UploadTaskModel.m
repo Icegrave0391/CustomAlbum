@@ -7,7 +7,6 @@
 //
 
 #import "UploadTaskModel.h"
-#import <UIKit/UIKit.h>
 
 @implementation UploadTaskModel
 
@@ -17,5 +16,6 @@
     }
     return _process ;
 }
+
 
 @end

@@ -14,5 +14,4 @@
 @property(nonatomic, strong)UIImage * image ;
 @property(nonatomic, strong)NSNumber * process ;
 
-
 @end

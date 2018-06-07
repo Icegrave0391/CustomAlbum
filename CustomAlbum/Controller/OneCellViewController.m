@@ -391,7 +391,7 @@
         dispatch_async(queue, ^{
             TaskModel * historyTask = [[TaskModel alloc] initWithImage:img AndUrlAddress:url AndTime:time] ;
             //使用数据库持久化
-            [[DataBase sharedDataBase] addHistoryTask:historyTask] ;
+            [[DataBase sharedDB] addHistoryTask:historyTask] ;
         });
         //下一个上传任务
         self.index ++ ;
@@ -455,9 +455,16 @@
 
 #pragma mark 上传数组
 -(void)getProcess:(CGFloat)process forIndex:(NSInteger)index{
-    UploadTaskModel * task = self.uploadArr[index] ;
-    task.process = [NSNumber numberWithFloat:process] ;
-    [self pushUploadArr] ;
+    dispatch_queue_t queue = dispatch_get_global_queue(0, 0) ;
+    dispatch_async(queue, ^{
+        UploadTaskModel * task = self.uploadArr[index] ;
+        task.process = [NSNumber numberWithFloat:process] ;
+    }) ;
+    
+    dispatch_queue_t main = dispatch_get_main_queue() ;
+    dispatch_async(main, ^{
+        [self pushUploadArr] ;
+    }) ;
 }
 -(void)pushUploadArr{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"progress" object:self.uploadArr] ;
